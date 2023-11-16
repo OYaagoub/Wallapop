@@ -1,12 +1,13 @@
 
-<div>
+<div id="homelink">
     Wallapop
 </div>
 <ul>
-    <li><a href="">categoria 1</a></li>
-    <li><a href="">categoria 2</a></li>
-    <li><a href="">categoria 3</a></li>
-    <li><a href="">categoria 4</a></li>
-    <li><a href="">categoria 5</a></li>
+    <li id="formsearch">
+        <form id="search" action="" method="get">
+            <input type="text" name="search" id="" placeholder="Search">
+            <input type="submit" value="Search">
+        </form>
+    </li>
 </ul>
         

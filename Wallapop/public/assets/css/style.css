@@ -15,7 +15,7 @@ header div{
 header ul{
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
     list-style-type: none;
     width: 40%;
@@ -23,18 +23,27 @@ header ul{
 
 header ul:last-child{
     width: 20%;
+    justify-content: space-between;
 }
 header ul:last-child li:last-child a {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
+    background: gray;
+    padding:10px;
+    border-radius: 10px;
+    margin-left: 10px;
 }
-
+header ul:last-child li:last-child a span{
+    font-size: 15px;
+    margin-right: 10px;
+    color:white;
+}
 header ul:last-child li:last-child a img{
     border-radius: 50%;
     border: 1px solid black;
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     
 }
 header li{
@@ -86,7 +95,7 @@ a{
 
 
 
-@media only screen and (max-width: 800px) {
+@media  screen and (max-width: 1176px) {
     header{
         flex-direction: column;
 
@@ -99,6 +108,8 @@ a{
         width: 100%;
         flex-wrap: wrap;
         justify-content: center;
+        background: rgba(138, 135, 135,.6);
+
     }
     li{
 
@@ -108,5 +119,151 @@ a{
     
   }
 
+#details{
+    width: 60%;
+    margin: 10px 20%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    border-radius: 10px;
+    border : 1px solid black;
+    padding: 10px;
+}
+#details div.img{
+    height: 60vh;
+    width: 90%;
+    margin: 10px 5%;
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+}
+#details div.img img{
+    min-width: 1000px;
+    min-height: 1000px;
+    position: relative;
+    top:-150px;
+    transition: .7s ease;
+    /* left:100px; */
 
+}
+#details div.img:hover img{
+    transform: scale(.8);
+}
 
+#details span{
+    font-size: 40px;
+    margin: 10px;
+    
+}
+#details span a{
+    color:white;
+    background: rgb(34, 34, 33);
+    align-self: center;
+    padding: 10px;
+    margin: 10px;
+    font-weight: 900;
+    border-radius: 10px;
+    float: right;
+}
+#user{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+#user span{
+    font-size: 20px;
+    margin: 20px;
+}
+#user img{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+#details h1{
+    max-width:96% ;
+    margin: 10px auto;
+}
+
+#details p{
+    width: 98%;
+    margin: 10px auto;
+    text-align: center;
+}
+.listfoto{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+
+}
+
+.listfoto img{
+    width: 20%;
+    margin: 10px auto;
+}
+
+form{
+    width: 60%;
+    height: max-content;
+    margin: 30px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    border: 1px solid black;
+    padding: 15px;
+
+}
+form input,form textarea{
+    width: 96%;
+    padding: 15px;
+    margin: 10px 0;
+}
+.btn{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+}
+.btn a{
+    padding: 10px;
+    background-color: blueviolet;
+    color:white;
+    font-weight: 900;
+    border-radius: 10px;
+    margin: 10px;
+}
+
+#search{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    padding: 0;
+    border:none;
+    position: relative;
+    margin:0;
+    border-radius: 20px;
+    overflow: hidden;
+}
+#search input[type="submit"]{
+    position: absolute;
+    width: max-content;
+    right:10px;
+    border-radius: 20px;
+    padding: 5px;
+
+}
+#search input[type="text"]{
+    width: 100%;
+    border-radius: 20px;
+}
+#formsearch{
+    width: 90%;
+    margin: 0px 5%; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+}
