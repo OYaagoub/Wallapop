@@ -32,54 +32,60 @@
 
 </details>
 <section id="cardAds">
-    <div class="card" data-url="/Wallapop/index.php?page=details">
-        <img src="./public/assets/uploads/i3601458768.webp" alt="">
-        <span><sup>$</sup>345<sup>99</sup></span>
-        <p>carpeta de mac v42.32</p>
-        <div class="btn">
-            <a href="">delete</a>
-            <a href="">view</a>
-            <a href="">edit</a>
+    <?= $mis = (empty($misanuncios)) ? "no tienes anuncios hechos" : "" ;?>
+    <?php foreach ($misanuncios as $anoncio_mi) :?>
+        <?php  
+            $g = $anoncio_mi->getPrice();
+            $arrayprice = explode(".", $g);
+            $images=$anu->getImagesAnu($anoncio_mi->getId());
+        ?>
+        <div class="card" data-url="#" 
+            data-title="<?= $anoncio_mi->getTitle() ?>"
+            data-description="<?= $anoncio_mi->getDescription() ?>"
+            data-price1="<?= $arrayprice[0] ?>"
+            data-price2="<?= $arrayprice[1] ?>"
+            data-image="<?= $anoncio_mi->getImage() ?>"
+            data-id="<?= $anoncio_mi->getId() ?>"
+            data-images="
+            <?php 
+            foreach ($images as  $image) {
+                echo $image->getImage().",".$image->getId().";";
+            }
+            ?>
+            
+            "
+        >
+            <img src="<?=$image=$anoncio_mi->getImage() ?>" alt="">
+            <span><?= $arrayprice[0]?><sup>,<?= $arrayprice[1]?></sup></span>
+            <p><?= $anoncio_mi->getTitle() ?></p>
+            <div class="btn">
+                <a href="/Wallapop/index.php?page=misanuncios&id_anuncion_del=<?=$id =$anoncio_mi->getId()?>">delete</a>
+                <a href="/Wallapop/index.php?page=details&id_st=<?=$id =$anoncio_mi->getId()?>">View/Update</a>
+
+            </div>
         </div>
-    </div>
-    <div class="card" data-url="/Wallapop/index.php?page=details">
-        <img src="./public/assets/uploads/i3601458768.webp" alt="">
-        <span><sup>$</sup>345<sup>99</sup></span>
-        <p>carpeta de mac v42.32</p>
-        <div class="btn">
-            <a href="">delete</a>
-            <a href="">view</a>
-            <a href="">edit</a>
+    
+    <?php endforeach ;?>
+    <!-- <form action="" id="edit" style="display:flex;flex-direction:column;width:80vw;height:80vh;position:fixed;top:5vh;right:10v;overflow-y:auto" method="post">
+        <input type="text" name="title" id="title" placeholder="titulo">
+        <textarea name="description" id="description" cols="30" rows="10"></textarea>
+        <div>
+            <select name="monida" id="monida">
+                <option value="$">$</option>
+                <option value="€">€</option>
+            </select>
+            <input type="number" name="price1" id="price1" placeholder="precio">
+            <span>.</span>
+            <input type="number" name="price2" id="price2" placeholder="precio">
         </div>
-    </div>
-    <div class="card" data-url="/Wallapop/index.php?page=details">
-        <img src="./public/assets/uploads/i3601458768.webp" alt="">
-        <span><sup>$</sup>345<sup>99</sup></span>
-        <p>carpeta de mac v42.32</p>
-        <div class="btn">
-            <a href="">delete</a>
-            <a href="">view</a>
-            <a href="">edit</a>
+        <input type="file" name="image" id="image" placeholder="imagen">
+        <div id="inputphotos">
+            <div>
+                <img src="" alt="">
+                <a href="">delete</a>
+            </div>
         </div>
-    </div>
-    <div class="card" data-url="/Wallapop/index.php?page=details">
-        <img src="./public/assets/uploads/i3601458768.webp" alt="">
-        <span><sup>$</sup>345<sup>99</sup></span>
-        <p>carpeta de mac v42.32</p>
-        <div class="btn">
-            <a href="">delete</a>
-            <a href="">view</a>
-            <a href="">edit</a>
-        </div>
-    </div>
-    <div class="card" data-url="/Wallapop/index.php?page=details">
-        <img src="./public/assets/uploads/i3601458768.webp" alt="">
-        <span><sup>$</sup>345<sup>99</sup></span>
-        <p>carpeta de mac v42.32</p>
-        <div class="btn">
-            <a href="">delete</a>
-            <a href="">view</a>
-            <a href="">edit</a>
-        </div>
-    </div>
+        <input type="submit" name="submit" id="submit" value="submit">
+
+    </form> -->
 </section>

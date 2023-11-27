@@ -50,6 +50,38 @@ class LoginController
         }
 
     }
+    public function getUserDataAnu($id){
+        if (!$stmt= $this->connection->prepare("SELECT fullname,photo FROM users WHERE id=? limit 1")) {
+            echo 'Error sql';
+        }
+        $stmt->bind_param('i', $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($result->num_rows==1) {
+            $user =$result->fetch_object(User::class);
+            return $user;
+        }else {
+            $_SESSION['error'] ="no User found!";
+            return null;
+        }
+
+    }
+    public function getUser($email){
+        if (!$stmt= $this->connection->prepare("SELECT * FROM users WHERE email=? limit 1")) {
+            echo 'Error sql';
+        }
+        $stmt->bind_param('i', $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($result->num_rows==1) {
+            $user =$result->fetch_object(User::class);
+            return $user;
+        }else {
+            $_SESSION['error'] ="no User found!";
+            return null;
+        }
+
+    }
     function generateRandomString($length = 250) {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charLength = strlen($characters);
@@ -86,6 +118,9 @@ class LoginController
     function logout(){
         unset($_SESSION['logcode']);
         unset($_SESSION['email']); 
+        unset($_SESSION['id_user']);
+        unset($_SESSION['name']);
+        unset($_SESSION['photo']);
         setcookie('logcode', '', time() - 1, '/');
         header('Location: /Wallapop/index.php');
     }
@@ -109,10 +144,18 @@ class LoginController
         $photo=$user->getPhoto();
         $pob=$user->getPoblacion();
         $phone=$user->getPhone();
-        $stmt->bind_param("ssssss",$email,$pass,$name,$photo,$pob,$phone);
-        $stmt->execute();
-        $_SESSION['success']="User saved";
-        header('Location: /Wallapop/index.php?page=login');
+        if ($this->getUser($email)==null) {
+            # code...
+            $stmt->bind_param("ssssss",$email,$pass,$name,$photo,$pob,$phone);
+            $stmt->execute();
+            # code...
+            $_SESSION['access']="User saved";
+            header('Location: /Wallapop/index.php?page=login');
+            
+        }else{
+            $_SESSION['error']="User found";
+        }
+        
     }
     
     

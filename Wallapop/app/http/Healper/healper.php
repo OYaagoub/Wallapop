@@ -12,10 +12,11 @@ class Healper
     function moveImagesAds($id_user,$id_anuncio,$image,$page){
         $targetUser = "public/assets/uploads/".$id_user;
         $targetAnoncio = $targetUser."/".$id_anuncio;
+
         $targetFile=$image['name'];
         $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
         
-        $imagepath=$targetAnoncio."/". "image_".date("YmdHis") . '_' . uniqid().$imageFileType;
+        $imagepath=$targetAnoncio."/". "image_".date("YmdHis") . '_' . uniqid().".".$imageFileType;
         if (file_exists($targetUser)) {
             if (file_exists($targetAnoncio)) {
                 $this->saveImage($image, $targetAnoncio, $page, $imageFileType, $imagepath);
@@ -60,20 +61,24 @@ class Healper
         if ($check === false) {
             $_SESSION['error']="File is not an image.";
             header("Location: /Wallapop/index.php?page=$page");
+            exit();
         }
         if ($image['size'] > 5000000) {
             $_SESSION['error']="File too large >5MB ";
             header("Location: /Wallapop/index.php?page=$page");
+            exit();
         }
         if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
             $_SESSION['error']="Only JPG, JPEG, PNG, and GIF files are allowed.";
             header("Location: /Wallapop/index.php?page=$page");
+            exit();
 
         }
         
         if (!move_uploaded_file($image['tmp_name'], $imagepath)) {
             $_SESSION['error']="Error uploading image";
             header("Location: /Wallapop/index.php?page=$page");
+            exit();
         }
 
     }
@@ -81,6 +86,7 @@ class Healper
         if (empty(trim($content))) {
             $_SESSION['error']="Empty input found";
             header("Location: /Wallapop/index.php?page=$page");
+            exit();
         }else{
 
             $string = preg_replace("/[^A-Za-z1-9\s_-]/", '', $content);
@@ -95,6 +101,7 @@ class Healper
         }else{
             $_SESSION['error']="Email is not valid";
             header("Location: /Wallapop/index.php?page=$page");
+            exit();
 
         }
     }

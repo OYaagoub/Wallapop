@@ -5,6 +5,10 @@ header{
     align-items: center;
     width: 100%;
     padding: 5px;
+    
+}
+body{
+    overflow-x: hidden;
 }
 header div{
     width: 10%;
@@ -22,8 +26,8 @@ header ul{
 }
 
 header ul:last-child{
-    width: 20%;
-    justify-content: space-between;
+    width: 40%;
+    justify-content: space-around;
 }
 header ul:last-child li:last-child a {
     display: flex;
@@ -94,30 +98,6 @@ a{
 
 
 
-
-@media  screen and (max-width: 1176px) {
-    header{
-        flex-direction: column;
-
-    }
-    header div{
-        width: 100%;
-        text-align: center;
-    }
-    header ul,header ul:last-child{
-        width: 100%;
-        flex-wrap: wrap;
-        justify-content: center;
-        background: rgba(138, 135, 135,.6);
-
-    }
-    li{
-
-        margin: 10px auto ;
-        padding: 5px;
-    }
-    
-  }
 
 #details{
     width: 60%;
@@ -198,7 +178,7 @@ a{
 }
 
 .listfoto img{
-    width: 20%;
+    width: 40%;
     margin: 10px auto;
 }
 
@@ -267,3 +247,52 @@ form input,form textarea{
     align-items: center;
     
 }
+#top{
+    display: flex;
+    flex-direction: row !important;
+    justify-content: center;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border:none;
+    position: relative;
+    margin:0;
+    border-radius: 20px;
+    overflow: hidden;
+}
+#top input{
+    width: 16%;
+}
+#top input[type="submit"]{
+    width: max-content;
+
+}
+
+
+@media  screen and (max-width: 1176px) {
+    header{
+        flex-direction: column;
+
+    }
+    header div{
+        width: 100%;
+        text-align: center;
+    }
+    header ul,header ul:last-child{
+        width: 100%;
+        flex-wrap: wrap;
+        justify-content: center;
+        background: rgba(138, 135, 135,.6);
+
+    }
+    li{
+
+        margin: 10px auto ;
+        padding: 5px;
+    }
+    #details{
+        width: 96%;
+        margin: 10px auto;
+    }
+    
+  }

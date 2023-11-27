@@ -1,32 +1,18 @@
 <section id="cardAds">
-    <div class="card" data-url="/Wallapop/index.php?page=details">
-        <img src="./public/assets/uploads/i3601458768.webp" alt="">
-        <span><sup>$</sup>345<sup>99</sup></span>
-        <p>carpeta de mac v42.32</p>
-    </div>
-    <div class="card" data-url="/Wallapop/index.php?page=details">
-        <img src="./public/assets/uploads/i3601458768.webp" alt="">
-        <span><sup>$</sup>345<sup>99</sup></span>
-        <p>carpeta de mac v42.32</p>
-    </div>
-    <div class="card" data-url="/Wallapop/index.php?page=details">
-        <img src="./public/assets/uploads/i3601458768.webp" alt="">
-        <span><sup>$</sup>345<sup>99</sup></span>
-        <p>carpeta de mac v42.32</p>
-    </div>
-    <div class="card" data-url="/Wallapop/index.php?page=details">
-        <img src="./public/assets/uploads/i3601458768.webp" alt="">
-        <span><sup>$</sup>345<sup>99</sup></span>
-        <p>carpeta de mac v42.32</p>
-    </div>
-    <div class="card" data-url="/Wallapop/index.php?page=details">
-        <img src="./public/assets/uploads/i3601458768.webp" alt="">
-        <span><sup>$</sup>345<sup>99</sup></span>
-        <p>carpeta de mac v42.32</p>
-    </div>
-    <div class="card" data-url="/Wallapop/index.php?page=details">
-        <img src="./public/assets/uploads/i3601458768.webp" alt="">
-        <span><sup>$</sup>345<sup>99</sup></span>
-        <p>carpeta de mac v42.32</p>
-    </div>
+    
+    
+    
+    <?= $retVal = (empty($anuncios)) ? "no tienes anuncios hechos" : "" ;?>
+    <?php foreach ($anuncios as $anoncio) :?>
+        
+        <a class="card" href="/Wallapop/index.php?page=details&id_st=<?= $anoncio->getId()?>">
+            <img src="<?=$image=$anoncio->getImage() ?>" alt="">
+            <?php  
+            $g = $anoncio->getPrice();
+            $arrayprice = explode(".", $g);
+            ?>
+            <span><?= $arrayprice[0]?><sup><?= $a=$arrayprice[1]?></sup></span>
+            <p><?= $anoncio->getTitle() ?></p>
+        </a>
+    <?php endforeach ;?>
 </section>

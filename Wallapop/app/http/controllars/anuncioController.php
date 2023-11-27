@@ -78,24 +78,63 @@ class AnuncioController
      * @param type Anuncio::class
      * @return type boolean
      */
-    public function delete(Anuncio $anuncio)
+    public function delete($id)
     {
-
-        if (!$stmt = $this->connection->prepare("DELETE FROM anuncios WHERE id=? and id_user=?"))
-        {
+        $stmt = $this->connection->prepare("DELETE FROM anuncios WHERE id=?");
+        if (!$stmt) {
             $_SESSION['error'] = "Error preparing statement";
             header("Location: /Wallapop/index.php?page=misanoncios");
+            exit(); // Exit the script after redirection
         }
-        $stmt=$stmt->bind_param("ii",$anuncio->getId(),$anuncio->getId_user());
-        $stmt->execute();
+
+        $bindResult = $stmt->bind_param("i", $id);
+        if (!$bindResult) {
+            $_SESSION['error'] = "Error binding parameters";
+            header("Location: /Wallapop/index.php?page=misanoncios");
+            exit(); // Exit the script after redirection
+        }
+
+        $executeResult = $stmt->execute();
+        if (!$executeResult) {
+            $_SESSION['error'] = "Error executing statement";
+            header("Location: /Wallapop/index.php?page=misanoncios");
+            exit(); // Exit the script after redirection
+        }
+
         if ($stmt->affected_rows == 1) {
             $_SESSION['success'] = "Anuncio eliminado correctamente";
             return true;
-        }
-        else{
+        } else {
+            $_SESSION['error'] = "Anuncio no está eliminado debido a permisos o no existe";
             return false;
         }
     }
+
+    public function removeImages(int $id) {
+        $stmt = $this->connection->prepare("DELETE FROM images WHERE id_ano=?");
+    
+        if (!$stmt) {
+            $_SESSION['error'] = "Error preparing statement: " . $this->connection->error;
+            header("Location: /Wallapop/index.php?page=misanoncios");
+            exit();
+        }
+    
+        if (!$stmt->bind_param("i", $id)) {
+            $_SESSION['error'] = "Error binding parameters: " . $stmt->error;
+            header("Location: /Wallapop/index.php?page=misanoncios");
+            exit();
+        }
+    
+        if (!$stmt->execute()) {
+            $_SESSION['error'] = "Error executing statement: " . $stmt->error;
+            header("Location: /Wallapop/index.php?page=misanoncios");
+            exit();
+        }
+    
+        // Handle successful deletion
+        // Redirect or perform other actions
+    }
+    
     /**
      *  
      * @return type array   
@@ -161,6 +200,22 @@ class AnuncioController
         }
         return $anuncios;
     }
+    public function getImagesAnu($id){
+        $images = array();
+        if (!$stmt = $this->connection->prepare("SELECT * FROM images WHERE id_ano=?"))
+        {
+            $_SESSION['error'] = "Error preparing statement";
+            header("Location: /Wallapop/index.php?page=misanoncios");
+        }
+        $stmt->bind_param("i",$id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        while ($image = $result->fetch_object(Image::class)){
+            $images[] = $image;
+        }
+        return $images;
+    }
     /**
      * 
      * @param type $id_anuncio,$image
@@ -180,12 +235,173 @@ class AnuncioController
         }
 
     }
+    public function updateImageAnu($id,$image)
+{
+    if (!$stmt = $this->connection->prepare("UPDATE anuncios SET image = ? WHERE id = ?")) {
+       $_SESSION['error'] = "Error preparing statement";
+       header("Location: /Wallapop/index.php?page=misanoncios");
+       exit(); // Terminate script execution after redirection
+    }
+
+    // Bind parameters separately and execute the statement
+    
+
+    if (!$stmt->bind_param("si", $image, $id)) {
+        $_SESSION['error'] = "Error binding parameters";
+        header("Location: /Wallapop/index.php?page=misanoncios");
+        exit(); // Terminate script execution after redirection
+    }
+
+    if ($stmt->execute()) {
+        $_SESSION['access'] = "Imagen actualizada correctamente";
+        return true;
+    } else {
+        $_SESSION['error'] = "La imagen no se ha actualizado";
+        return false;
+    }
+
+}
+
+public function updatePrice($id,$price)
+{
+    if (!$stmt = $this->connection->prepare("UPDATE anuncios SET price = ? WHERE id = ?")) {
+       $_SESSION['error'] = "Error preparing statement";
+       header("Location: /Wallapop/index.php?page=misanoncios");
+       exit(); // Terminate script execution after redirection
+    }
+
+    // Bind parameters separately and execute the statement
+    
+
+    if (!$stmt->bind_param("si", $price, $id)) {
+        $_SESSION['error'] = "Error binding parameters";
+        header("Location: /Wallapop/index.php?page=misanoncios");
+        exit(); // Terminate script execution after redirection
+    }
+
+    if ($stmt->execute()) {
+        $_SESSION['access'] = "Precio actualizado correctamente";
+        return true;
+    } else {
+        $_SESSION['error'] = "El precio no se ha actualizado";
+        return false;
+    }
+}
+public function updateTitle($id,$title)
+{
+    if (!$stmt = $this->connection->prepare("UPDATE anuncios SET title = ? WHERE id = ?")) {
+       $_SESSION['error'] = "Error preparing statement";
+       header("Location: /Wallapop/index.php?page=misanoncios");
+       exit(); // Terminate script execution after redirection
+    }
+
+    // Bind parameters separately and execute the statement
+    
+    if (!$stmt->bind_param("si", $title, $id)) {
+        $_SESSION['error'] = "Error binding parameters";
+        header("Location: /Wallapop/index.php?page=misanoncios");
+        exit(); // Terminate script execution after redirection
+    }
+
+    if ($stmt->execute()) {
+        $_SESSION['access'] = "Título actualizado correctamente";
+        return true;
+    } else {
+        $_SESSION['error'] = "El título no se ha actualizado";
+        return false;
+    }
+}
+
+
+public function updateDescription($id ,$description)
+{
+    if (!$stmt = $this->connection->prepare("UPDATE anuncios SET description = ? WHERE id = ?")) {
+       $_SESSION['error'] = "Error preparing statement";
+       header("Location: /Wallapop/index.php?page=misanoncios");
+       exit(); // Terminate script execution after redirection
+    }
+
+    // Bind parameters separately and execute the statement
+    
+
+    if (!$stmt->bind_param("si", $description, $id)) {
+        $_SESSION['error'] = "Error binding parameters";
+        header("Location: /Wallapop/index.php?page=misanoncios");
+        exit(); // Terminate script execution after redirection
+    }
+
+    if ($stmt->execute()) {
+        $_SESSION['access'] = "Descripción actualizada correctamente";
+        return true;
+    } else {
+        $_SESSION['error'] = "La descripción no se ha actualizado";
+        return false;
+    }
+}
 
 
 
+public function updateImage($id, $image)
+{
+    if (!$stmt = $this->connection->prepare("UPDATE images SET image = ? WHERE id = ?")) {
+        $_SESSION['error'] = "Error preparing statement";
+        header("Location: /Wallapop/index.php?page=misanoncios");
+        exit(); // Terminate script execution after redirection
+    }
 
+    if (!$stmt->bind_param("si", $image, $id)) {
+        $_SESSION['error'] = "Error binding parameters";
+        header("Location: /Wallapop/index.php?page=misanoncios");
+        exit(); // Terminate script execution after redirection
+    }
 
+    if ($stmt->execute()) {
+        return true;
+    } else {
+        return false;
+    }
+}
 
+public function searchByTitle($title)
+{
+    if (!$stmt = $this->connection->prepare("SELECT * FROM anuncios WHERE title LIKE ?")) {
+        $_SESSION['error'] = "Error preparing statement";
+        header("Location: /Wallapop/index.php?page=misanoncios");
+        exit(); // Terminate script execution after redirection
+    }
+
+    $title = '%' . $title . '%'; // Add wildcards to search for partial matches
+
+    if (!$stmt->bind_param("s", $title)) {
+        $_SESSION['error'] = "Error binding parameters";
+        header("Location: /Wallapop/index.php?page=misanoncios");
+        exit(); // Terminate script execution after redirection
+    }
+
+    if ($stmt->execute()) {
+        $result = $stmt->get_result();
+        $advertisements = array();
+
+        while ($row = $result->fetch_assoc()) {
+            // Create Anuncio objects from the retrieved data and add them to the array
+            $anuncio = new Anuncio();
+            $anuncio->setId($row['id']);
+            $anuncio->setTitle($row['title']);
+            $anuncio->setDescription($row['description']);
+            $anuncio->setPrice($row['price']);
+            $anuncio->setId_user($row['id_user']);
+            $anuncio->setImage($row['image']);
+
+            $advertisements[] = $anuncio;
+        }
+
+        return $advertisements;
+    } else {
+        $_SESSION['error'] = "Error executing statement";
+        header("Location: /Wallapop/index.php?page=misanoncios");
+        exit(); // Terminate script execution after redirection
+    }
+}
 
 
 
