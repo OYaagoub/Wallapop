@@ -1,10 +1,10 @@
 <?php 
 class ConnexionController
 {
-    private $servername = "localhost";
-    private $username = "root";
-    private $password = "";
-    private $dbname = "wallapop";
+    private $servername = getenv("DB_HOST");
+    private $username = getenv("DB_USERNAME");
+    private $password = getenv("DB_PASSWOED");
+    private $dbname = getenv("DB_NAME");
     private $conn;
     
     /**
