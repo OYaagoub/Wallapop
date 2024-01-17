@@ -3,7 +3,7 @@ class ConnexionController
 {
     private $servername = getenv("DB_HOST");
     private $username = getenv("DB_USERNAME");
-    private $password = getenv("DB_PASSWOED");
+    private $password = getenv("DB_PASSWORD");
     private $dbname = getenv("DB_NAME");
     private $conn;
     
