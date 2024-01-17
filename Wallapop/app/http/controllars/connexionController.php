@@ -1,10 +1,10 @@
 <?php 
 class ConnexionController
 {
-    private $servername = getenv("DB_HOST");
-    private $username = getenv("DB_USERNAME");
-    private $password = getenv("DB_PASSWORD");
-    private $dbname = getenv("DB_NAME");
+    private $servername = "practica26consumyoussama-server.mysql.database.azure.com";
+    private $username = "kvpvwogxfq";
+    private $password = "60U66HGMFNQ07SR5$";
+    private $dbname = "practica26consumyoussama-database";
     private $conn;
     
     /**
